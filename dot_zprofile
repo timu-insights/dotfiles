@@ -1,0 +1,22 @@
+# Homebrew Environment
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# OrbStack Integration
+source ~/.orbstack/shell/init.zsh 2>/dev/null || :
+
+# 1Password SSH Agent
+export SSH_AUTH_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
+export OP_BIOMETRIC_UNLOCK_ENABLED=true
+
+# PostgreSQL@17 (keg-only, not in default PATH)
+export PATH="/opt/homebrew/opt/postgresql@17/bin:$PATH"
+
+# Local binaries
+export PATH="$HOME/.local/bin:$PATH"
+
+# nvm directory
+#export NVM_DIR="$HOME/.nvm"
+
+# Editor & Pager
+export EDITOR="code -w"
+export PAGER="less -R"

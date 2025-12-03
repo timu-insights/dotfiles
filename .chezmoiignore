@@ -1,0 +1,6 @@
+README.md
+LICENSE
+.DS_Store
+
+# VS Code - let Settings Sync handle
+Library/Application Support/Code/**

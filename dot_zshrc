@@ -1,0 +1,91 @@
+# ══════════════════════════════════════════════════════════════
+# Oh My Zsh Configuration
+# ══════════════════════════════════════════════════════════════
+export ZSH="$HOME/.oh-my-zsh"
+ZSH_THEME="robbyrussell"
+
+# ══════════════════════════════════════════════════════════════
+# Homebrew Completions (must be set BEFORE compinit/OMZ)
+# ══════════════════════════════════════════════════════════════
+if type brew &>/dev/null; then
+    FPATH="$(brew --prefix)/share/zsh-completions:$FPATH"
+    FPATH="$(brew --prefix)/share/zsh/site-functions:$FPATH"
+fi
+
+# ══════════════════════════════════════════════════════════════
+# OMZ Plugins
+# ══════════════════════════════════════════════════════════════
+# zsh-autocomplete loaded here (has strict compinit requirements)
+# Other plugins (autosuggestions, syntax-highlighting) loaded via Homebrew below
+plugins=(
+    1password
+    aliases
+    alias-finder
+    brew
+    chezmoi
+    colored-man-pages
+    copyfile
+    copypath
+    cp
+    dirhistory
+    encode64
+    extract
+    git
+    git-lfs
+    iterm2
+    jsontools
+    macos
+    node
+    npm
+    pip
+    sudo
+    textmate
+    vscode
+    web-search
+    z
+    zsh-autocomplete
+)
+
+source $ZSH/oh-my-zsh.sh
+
+# ══════════════════════════════════════════════════════════════
+# ⚙️ Shell Options
+# ══════════════════════════════════════════════════════════════
+setopt interactivecomments    # Allow comments in interactive shell
+setopt auto_cd                # cd by typing directory name
+setopt extendedglob           # Extended globbing patterns
+setopt completeinword         # Complete from cursor position
+
+# ══════════════════════════════════════════════════════════════
+# 🎯 Completion Styles
+# ══════════════════════════════════════════════════════════════
+zstyle ':completion:*' expand 'yes'    # Expand ~ to full path during completion
+
+# ══════════════════════════════════════════════════════════════
+# Homebrew Plugins (sourced AFTER OMZ)
+# ══════════════════════════════════════════════════════════════
+# Autosuggestions (fish-like suggestions as you type)
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# Syntax highlighting (MUST be last)
+source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# ══════════════════════════════════════════════════════════════
+# Tool Loaders
+# ══════════════════════════════════════════════════════════════
+# nvm (Node Version Manager)
+export NVM_DIR="$HOME/.nvm"
+    [ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ] && \. "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" # This loads nvm
+    [ -s "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" # This loads nvm bash_completion
+
+# op plugins (1Password CLI Plugins)
+source ~/.config/op/plugins.sh
+
+# ══════════════════════════════════════════════════════════════
+# Aliases & Functions
+# ══════════════════════════════════════════════════════════════
+# PostgreSQL Helpers
+pgup()     { brew services start postgresql@17; }
+pgdown()   { brew services stop postgresql@17; }
+pgstatus() { brew services list | command grep postgresql@17; }
+alias psql17="psql --host=localhost --port=5432"

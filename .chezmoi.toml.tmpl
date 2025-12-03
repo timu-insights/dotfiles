@@ -1,0 +1,11 @@
+{{- $email := promptStringOnce . "email" "Email address" -}}
+{{- $name := promptStringOnce . "name" "Full name" -}}
+{{- $githubUser := promptStringOnce . "github_user" "GitHub username" -}}
+
+[data]
+    email = {{ $email | quote }}
+    name = {{ $name | quote }}
+    github_user = {{ $githubUser | quote }}
+
+[onepassword]
+    prompt = true
